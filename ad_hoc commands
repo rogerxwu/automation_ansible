@@ -1,0 +1,2 @@
+# operate huawei device
+ansible {{Hostname}} -m ce_command -a "commands='display security-policy rule all'" -k --user {{username}} --connection network_cli
