@@ -1,0 +1,25 @@
+# Operate huawei device to add security policy
+---
+- name: operate data center SV7 huawei firewall
+  hosts: DC_SV7_firewall
+  #hosts params includes ansible_ssh_host, ansible_ssh_port, ansible_ssh_user, ansible_ssh_password, ansible_network_os = ce
+  gather_facts: yes
+  connection: network_cli
+  # recommend to use network_cli, local is prepreated soon.
+
+
+  tasks:
+    - name: add policy
+      ce_command:
+        commands:
+          - system-view
+          - security-policy
+          - rule name test
+          - source-zone trust
+          - destination-zone ZX
+          - source-address 10.252.199.0 24
+          - destination-address 172.30.0.0 16
+          - action permit
+      register: e
+    - debug:
+        var: e.stdout_lines
